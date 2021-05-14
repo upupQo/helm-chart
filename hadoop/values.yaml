@@ -67,7 +67,10 @@ yarn:
         memory: "2048Mi"
         cpu: "1000m"
       limits:
-        memory: "2048Mi"
+      #fix map 0% reduce 0% hang
+      #detail: https://stackoverflow.com/a/23251000/14124399  https://stackoverflow.com/questions/23231403/mapreduce-in-hadoop-2-2-0-not-working
+      #notice: if use minikube, use such as to set memory limit `minikube config set memory 6144`
+        memory: "4096Mi"
         cpu: "1000m"
 
 persistence:
