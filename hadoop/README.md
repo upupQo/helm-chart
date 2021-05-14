@@ -46,7 +46,7 @@ Hadoop	2
 Hello	2
 World	2
 ```
-
+hadoop-mapreduce-examples source code: https://github.com/apache/hadoop/tree/rel/release-2.9.0/hadoop-mapreduce-project/hadoop-mapreduce-examples
 ## 参考：
 https://gist.github.com/TeemuKoivisto/5632fabee4915dc63055e8e544247f60
 
