@@ -1,4 +1,58 @@
-# ⚠️ Repo Archive Notice
+# new  
+## 操作  
+install chart: `helm install hadoop --set yarn.nodeManager.replicas=1 ./hadoop`  
+access yarn-ui: `minikube kubectl -- port-forward service/hadoop-hadoop-yarn-ui 8080:8088` ，open localhost:8088  
+
+## 组成  
+### hdfs  
+dataNode、nameNode  
+
+### yarn  
+nodeManager、resourceManager
+
+### 配置  
+
+chart的默认hadoop配置在hadoop-configmap.yaml文件。
+
+## test
+
+1.login hdfs data-node `minikube kubectl -- exec -it pod/hadoop-hadoop-hdfs-dn-0 /bin/bash`
+
+2.prepare input
+
+```shell
+cd /home
+mkdir input
+echo Hello World Bye World > input/file01
+echo Hello Hadoop Goodbye Hadoop > input/file02
+/usr/local/hadoop/bin/hadoop fs -put input / # Put the data into the HDFS drive
+/usr/local/hadoop/bin/hadoop fs -rm -r -f /output # may need to clear output dir if not first time run
+```
+
+3.run map-reduce example & cat res
+
+```shell
+/usr/local/hadoop/bin/hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.9.0.jar wordcount /input /output  #run wordcount map-reduce example
+/usr/local/hadoop/bin/hadoop fs -ls  /output
+/usr/local/hadoop/bin/hadoop fs -cat /output/part-r-00000
+```
+
+the result is as followed:
+
+```
+Bye	1
+Goodbye	1
+Hadoop	2
+Hello	2
+World	2
+```
+
+## 参考：
+https://gist.github.com/TeemuKoivisto/5632fabee4915dc63055e8e544247f60
+
+https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+
+# Repo Archive Notice⚠️ 
 
 As of Nov 13, 2020, charts in this repo will no longer be updated.
 For more information, see the Helm Charts [Deprecation and Archive Notice](https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice), and [Update](https://helm.sh/blog/charts-repo-deprecation/).
