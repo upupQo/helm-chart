@@ -1,7 +1,12 @@
-# new  
+# upupQo  
+
+## From
+
+https://github.com/helm/charts/tree/master/stable/hadoop
+
 ## 操作  
 install chart: `helm install hadoop --set yarn.nodeManager.replicas=1 ./hadoop`  
-access yarn-ui: `minikube kubectl -- port-forward service/hadoop-hadoop-yarn-ui 8080:8088` ，open localhost:8088  
+access yarn-ui: `minikube kubectl -- port-forward service/hadoop-hadoop-yarn-ui 8088:8088` ，open localhost:8088  
 
 ## 组成  
 ### hdfs  
@@ -50,7 +55,20 @@ hadoop-mapreduce-examples source code: https://github.com/apache/hadoop/tree/rel
 ## 参考：
 https://gist.github.com/TeemuKoivisto/5632fabee4915dc63055e8e544247f60
 
-https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html
+https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html  
+## 遇到的问题：
+### 1.hdfs-datanode pod重启失败  
+quick fix：
+
+
+
+过程：
+
+1.先打pod log: `minikube kubectl -- logs pod/hadoop-hadoop-hdfs-dn-0` : java.io.IOException: Incompatible clusterIDs in /root/hdfs/datanode: namenode clusterID = CID-3994d043-8223-4335-9bdf-98a12c2b5233; datanode clusterID = CID-3f70a157-7824-4d7a-a40a-8adaccd9bdea
+
+2.查资料，看了下dn 和nn的确实不一样: login ns , `cat /root/hdfs/namenode/current/VERSION`  ;login ds `cat /root/hdfs/datanode/current/VERSION`  
+
+3.不知道为什么会出现clusterID不一致的问题。todo。  
 
 # Repo Archive Notice⚠️ 
 
