@@ -1,24 +1,4 @@
-annotations:
-  category: Infrastructure
-apiVersion: v2
-appVersion: 3.1.1
-dependencies:
-- name: common
-  repository: https://charts.bitnami.com/bitnami
-  tags:
-  - bitnami-common
-  version: 1.x.x
-description: Spark is a fast and general-purpose cluster computing system.
-home: https://github.com/bitnami/charts/tree/master/bitnami/spark
-icon: https://bitnami.com/assets/stacks/spark/img/spark-stack-220x234.png
-keywords:
-- apache
-- spark
-maintainers:
-- email: containers@bitnami.com
-  name: Bitnami
-name: spark
-sources:
-- https://github.com/bitnami/bitnami-docker-spark
-- https://spark.apache.org/
-version: 5.4.2
+#detail https://helm.sh/docs/topics/charts/#the-chartyaml-file
+apiVersion: v1  #The chart API version
+name: spark     #The name of the chart (required)
+version: 1.1.4  #A SemVer 2 version (required)
