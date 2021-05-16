@@ -1,6 +1,9 @@
 # upupQo  
 ## From：
 chart files download from : https://artifacthub.io/packages/helm/bitnami/spark   
+
+chart GitHub: https://github.com/bitnami/charts/tree/master/bitnami/spark
+
 ## 操作：
 install chart: `helm install spark ./spark`  
 access master web-ui: `minikube kubectl -- port-forward pod/spark-master-0 8080:8080` open localhost:8080  
