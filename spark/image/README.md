@@ -2,7 +2,7 @@
 
 ```shell
 cd ~repos/helm-chart/spark/image
-docker build -t upupdididi/spark-2.3.1-without-hadoop:1.0.0 .
+docker build -t upupdididi/spark-2.3.1-with-hadoop2.6:1.0.0 .
 ```
 
 # 说明
@@ -21,7 +21,7 @@ spark包下载地址：https://archive.apache.org/dist/spark/spark-2.3.1
 login container：
 
 ```shell
-docker run -it --name spark-test -d upupdididi/spark-2.3.1-without-hadoop:1.0.0
+docker run -it --name spark-test -d upupdididi/spark-2.3.1-with-hadoop-2.6:1.0.0
 docker exec -it spark-test /bin/bash
 ```
 
