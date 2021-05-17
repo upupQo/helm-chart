@@ -1,4 +1,4 @@
 #detail https://helm.sh/docs/topics/charts/#the-chartyaml-file
 apiVersion: v1  #The chart API version
-name: spark     #The name of the chart (required)
+name: spark    #The name of the chart (required)
 version: 1.1.4  #A SemVer 2 version (required)

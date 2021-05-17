@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "spark.name" . }}-master
+  labels:
+    component: {{ include "spark.name" . }}-master
+spec:
+  selector:
+    # has to match .spec.template.metadata.labels
+    # match all
+    matchLabels:
+      app: {{ include "spark.name" . }}
+      component: spark-master
+  serviceName: {{ include "spark.name" . }}-lb-svc
+  replicas: {{ .Values.master.replica }}
+  template:
+    metadata:
+    # has to match .spec.selector.matchLabels
+      labels:
+        app: {{ include "spark.name" . }}
+        component: spark-master
+    spec:
+      containers:
+        - name: {{ include "spark.name" . }}-master
+          image: {{ .Values.image.repository }}:{{ .Values.image.version }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+              name: web-ui-port
+            - containerPort: 7077
+              name: inner-tcp-port
+          env:
+            - name: SPARK_HOME
+              value: {{ .Values.const.SPARK_HOME }}
+          #todo: why command: ["sh","-c","$SPARK_HOME/sbin/start-master.sh && /bin/bash"] cause pod terminated with reason complete
+          command: ["sh","-c","$SPARK_HOME/sbin/start-master.sh && tail -f /dev/null"]
+          volumeMounts:
+            - mountPath: "{{ .Values.const.SPARK_HOME }}/conf"
+              name: spark-config-volume
+              
+            - mountPath: {{ .Values.const.HADOOP_CONF_DIR }}/core-site.xml
+              name: hadoop-and-yarn-config-volume
+              subPath: "core-site.xml"
+            - mountPath: {{ .Values.const.HADOOP_CONF_DIR }}/hdfs-site.xml
+              name: hadoop-and-yarn-config-volume
+              subPath: "hdfs-site.xml"
+            - mountPath: {{ .Values.const.HADOOP_CONF_DIR }}/mapred-site.xml
+              name: hadoop-and-yarn-config-volume
+              subPath: "mapred-site.xml"
+              
+            - mountPath: {{ .Values.const.YARN_CONF_DIR }}/yarn-site.xml
+              name: hadoop-and-yarn-config-volume
+              subPath: "yarn-site.xml"
+      volumes:
+        - name: hadoop-and-yarn-config-volume
+          configMap:
+            name: {{ .Values.const.hadoop_and_yarn_configmap_name }}
+        - name: spark-config-volume
+          configMap:
+            name: {{ include "spark.name" . }}-cm
+          
+    
+    

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spark.name" . }}-hls-svc
+spec:
+  selector:
+    # select pod who has special label
+    component: {{ include "spark.name" . }}-worker
+  clusterIP: None
+  ports:
+    - port: 8081
+      protocol: TCP
+      name: web-ui-port
+    - port: 7077
+      protocol: TCP
+      name: inner-tcp-port
+    
