@@ -49,6 +49,6 @@ df.write.partitionBy("level","date").parquet("test_data_dir")
 df.write.partitionBy("level","date").json("test_data_dir_json")
 ```
 
-因为配置了hadoop，文件已经写到hdfs里面了，通过hadoop-namenode-ui查看(先minikube portforward port,再VNC连接到容器里面的浏览器，在里面打开url访问)：http://hadoop-hadoop-hdfs-nn-0.hadoop-hadoop-hdfs-nn.default:50070/
+因为配置了hadoop，文件已经写到hdfs里面了，通过hadoop-namenode-ui查看(先minikube kubectl -- portforward port,再VNC连接到容器里面的浏览器，在里面打开url访问)：http://hadoop-hadoop-hdfs-nn-0.hadoop-hadoop-hdfs-nn.default:50070/
 
 ![](https://github.com/upupQo/helm-chart/raw/main/spark/snap/files.png)
